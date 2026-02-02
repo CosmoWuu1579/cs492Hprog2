@@ -5,32 +5,11 @@
 #include "parse.h"
 #include <stdlib.h>
 #include <math.h>
-void printing(array_list* arr);
-int main(int argc, char** argv) {
-    if (argc != 2) {
-        fprintf(stderr, "Incorrect number of formats");
-        return 1;
-    }
-    char* path = argv[1];
-    FILE* f = fopen(path, "r");
-    array_list *arr = parse_data(f);
-    if (arr == NULL) {
-        return 1;
-    }
-    printing(arr);
-    free_all(arr);
-    free(arr);
-    fclose(f);
-}
-
 int compare(const void* a, const void* b) {
     int x = ((node*) a) ->index;
     int y = ((node*) b) ->index;
     return (x > y) - (x < y); 
 }
-// Plan for evaluating:
-// First, print out all the first row first and then store the indices so we know how to print
-// Then, for the n input, make a for loop from 1 to 2^N and then just use bitmasking to go thru all of them
 void printing(array_list* arr) {
 
     int* inputs = (int*) malloc((arr->total_input) * sizeof(int));
@@ -91,3 +70,26 @@ void printing(array_list* arr) {
     free(outputs);
 
 }
+
+void test(char* path) {
+    FILE* f = fopen(path, "r");
+    array_list *arr = parse_data(f);
+    if (arr == NULL) {
+        return;
+    }
+    print_list(arr);
+    printing(arr);
+    free_all(arr);
+    free(arr);
+    fclose(f);
+}
+
+int main() {
+    char* path1 = "circuit2.txt";
+    char* path2 = "circuit3.txt";
+    char* path3 = "xor.txt";
+    test(path1);
+    test(path2);
+    test(path3);
+}
+

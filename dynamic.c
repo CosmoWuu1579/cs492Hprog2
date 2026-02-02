@@ -5,16 +5,14 @@ array_list* new_array_list(int cap) {
     array_list* new_list = (array_list*) malloc(sizeof(array_list));
     new_list->size = 0;
     new_list->capacity = cap;
-    new_list->data = (node*) malloc(sizeof(node) * cap); // TODO remember to clear this shit out
+    new_list->data = (node*) malloc(sizeof(node) * cap); 
     new_list->total_input = 0;
     new_list->total_output = 0;
     return new_list;
 }
 
 void add_to_list(array_list* arr, node *new_element) {
-    // TODO modify, but i just wanna make sure everything good right now
     if (arr->size == arr->capacity) {
-        // do something -> call resize function
         resize(arr);
     }
 

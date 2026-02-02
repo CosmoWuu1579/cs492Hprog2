@@ -1,0 +1,50 @@
+{
+    {
+        Type = INPUT
+        UniqueID = 0
+        Input = 
+        Output = 4,
+    }
+    {
+        Type = INPUT
+        UniqueID = 3
+        Input = 
+        Output = 5,
+    }
+    {
+        Type = OUTPUT
+        UniqueID = 1
+        Input = 7,
+        Output = 
+    }
+    {
+        Type = AND
+        UniqueID = 7
+        Input = 4,5,6,
+        Output = 1,
+    }
+    {
+        Type = INPUT
+        UniqueID = 2
+        Input = 
+        Output =6 ,
+    }
+    {
+        UniqueID = 6
+        Output = 7,
+        Input = 2,
+        Type = OR
+    }
+    {
+        UniqueID = 4
+        Output = 7,
+        Input = 0,
+        Type = NOT
+    }
+    {
+        UniqueID = 5
+        Output = 7,
+        Input = 3,
+        Type = AND
+    }
+}

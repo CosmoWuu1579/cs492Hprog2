@@ -12,23 +12,17 @@ int read_line(char reader[], FILE* f);
 array_list* parse_data(FILE* f) {// return NULL if error
     // this ASSUMES f has already been checked for NULL pointer
     array_list* storage = new_array_list(15);
-    //printf("HI");
     // first, we scan the first line
     // free the memory at the end btw
     char read_file[1024];
     char* parsed_result = (char*) malloc(strlen(read_file) + 1);
     int file_size = 0;
-    // fgets(read_file, sizeof(read_file), f); // NEEDS ADJUSMENT -> SIMPLY MAKE A NEW FUNCTION THAT USES fread
-    // it should stop when it reaches \n or the function returns NULL -> yeah lowk this is easy to implement
-    // and then add a \0 at the end of the thing :D 
-    // still a similar concept with malloc tho
-    // read_file[strcspn(read_file, "\n")] = '\0';
     read_line(read_file, f);
     scan_line(read_file, &file_size, parsed_result);
     //printf("%s", read_file);
     //printf("\n%s", parsed_result);
 
-    if (strcmp(parsed_result, "{") != 0) { // double check that this works with the \0 btw
+    if (strcmp(parsed_result, "{") != 0) { 
         free(parsed_result);
         // printf("%s\n", parsed_result);
         fprintf(stderr, "INCORRECT FORMATTING WITH THE BEGINNING OF THE FILE\n");
@@ -46,10 +40,9 @@ array_list* parse_data(FILE* f) {// return NULL if error
     // scan 4 lines 
     // scan for }
     // repeat
-    while (true) { // make the while condition simply be that read_file isn't the end completetion thing -> i forgot what that is lol
+    while (true) { 
         file_size = 0;
-        // fgets(read_file, sizeof(read_file), f);
-        // read_file[strcspn(read_file, "\n")] = '\0';
+    
         read_line(read_file, f);
         parsed_result = (char*) malloc(strlen(read_file) + 1);
         scan_line(read_file, &file_size, parsed_result);
@@ -75,38 +68,12 @@ array_list* parse_data(FILE* f) {// return NULL if error
         read_line(second_line, f);
         read_line(third_line, f);
         read_line(fourth_line, f);
-        // printf("%s\n", first_line);
-        //         printf("%s\n", second_line);
-
-        //                 printf("%s\n", third_line);
-        // printf("%s\n", fourth_line);
-
-        // fgets(first_line, sizeof(first_line), f);
-        // first_line[strcspn(first_line, "\n")] = '\0';
-        // fgets(second_line, sizeof(second_line), f);
-        // second_line[strcspn(second_line, "\n")] = '\0';
-        // fgets(third_line, sizeof(third_line), f);
-        // third_line[strcspn(third_line, "\n")] = '\0';
-        // fgets(fourth_line, sizeof(fourth_line), f);
-        // fourth_line[strcspn(fourth_line, "\n")] = '\0';
-        /*
-        fscanf(f, "%s", first_line); // TODO add a checker that ensures that if there's any error at this point, 
-        // RETURN NULL
-        fscanf(f, "%s", second_line);
-        fscanf(f, "%s", third_line);
-        fscanf(f, "%s", fourth_line);
-        */
-       //printf("before\n");
         if (use_info(first_line, second_line, third_line, fourth_line, storage) == 1) {
             fprintf(stderr, "INCORRECT FORMATTING WITH THE STANZA INSIDE");
-            // printf("gg");
             return NULL;
         }
-        // printf("hello\n");
         // take care of the ending bracket 
         file_size = 0;
-        // fgets(read_file, sizeof(read_file), f);
-        // read_file[strcspn(read_file, "\n")] = '\0';
         read_line(read_file, f);
         parsed_result = (char*) malloc(strlen(read_file) + 1);
         scan_line(read_file, &file_size, parsed_result);
@@ -120,8 +87,7 @@ array_list* parse_data(FILE* f) {// return NULL if error
         free(parsed_result);
     }
 
-    // file_size = 0;
-    // scan_line(read_file, &file_size, parse_result);
+
     if (strcmp(parsed_result, "}") != 0) {
         free(parsed_result);
         fprintf(stderr, "INCORRECT FORMATTING WITH THE ENDING OF THE FILE\n");
@@ -136,7 +102,6 @@ array_list* parse_data(FILE* f) {// return NULL if error
 int use_info(char* first, char* second, char* third, char* fourth, array_list* source) {
     // return 1 if there's an error
     // return 0 if there is no error    
-    // i lowkey dont tknow how to take a substring in C LOL, so i have to look this up
     char* new_first = (char*) malloc(strlen(first) + 1);
     char* new_second = (char*) malloc(strlen(second) + 1);
     char* new_third = (char*) malloc(strlen(third) + 1);
@@ -151,11 +116,6 @@ int use_info(char* first, char* second, char* third, char* fourth, array_list* s
     scan_line(second, &second_size, new_second);
     scan_line(third, &third_size, new_third);
     scan_line(fourth, &fourth_size, new_fourth);
-        //         printf("%s\n", new_first);
-        // printf("%s\n", new_second);
-        // printf("%s\n", new_third);
-        // printf("%s\n", new_fourth);
-    // TODO add null terminators cuz apparently that's needed 
     // get all the words parsed out
     char* parsed_first = get_str(new_first, first_size);
     char* parsed_second = get_str(new_second, second_size);
@@ -167,7 +127,6 @@ int use_info(char* first, char* second, char* third, char* fourth, array_list* s
     // printf("%s %s\n", new_fourth, parsed_fourth);
     if (check_dupe(parsed_first, parsed_second, parsed_third, parsed_fourth)) {
         printf("has dupe\n");
-        // ADD FREE if the parsed shit has to be malloc
         free(parsed_first);
         free(parsed_second);
         free(parsed_third);
@@ -196,7 +155,7 @@ int use_info(char* first, char* second, char* third, char* fourth, array_list* s
 
     check +=  modify_based(parsed_fourth, new_fourth, &new_node);
     //    printf("%d\n", check);
-    // THE ISSUE IS WITH INPUT AND OUTPUT
+    //printf("%s\n", new_fourth);
     free(new_first);
     free(new_second);
     free(new_third);
@@ -205,7 +164,6 @@ int use_info(char* first, char* second, char* third, char* fourth, array_list* s
     free(parsed_second);
     free(parsed_third);
     free(parsed_fourth);
-    // printf("hi");
 
     if (check != 0) {
         printf("couldnt modify\n");
@@ -214,7 +172,6 @@ int use_info(char* first, char* second, char* third, char* fourth, array_list* s
     // TODO check input size for the ones with NOT
 
     add_to_list(source, &new_node);
-    //printf("meow");
     return 0;
 }
 
@@ -267,9 +224,7 @@ int modify_based(char* parsed, char* full, node* n) {
     } else if (strcmp(parsed, "Input") == 0) {
         char* par;
         int size = strlen(full) - strlen(parsed) - 1;
-        // if (size == 0) {
-        //     return 0;
-        // }
+    
 
         par = (char*) malloc(size + 1);
         if (size != 0) {
@@ -318,9 +273,6 @@ int modify_based(char* parsed, char* full, node* n) {
     } else if (strcmp(parsed, "Output") == 0) {
         char* par;
         int size = strlen(full) - strlen(parsed) - 1;
-        // if (size == 0) {
-        //     return 0;
-        // }
         int actual_index = 0;
         par = (char*) malloc(size + 1);
         if (size != 0) {
@@ -414,20 +366,15 @@ void scan_line(char* line, int* size, char* result) {
     result[*size] = '\0';
     // printf("\n%c\n", result[0]);
     // printf("\n%d\n", strlen(result));
-    // TODO double check if i have to add the '\0' myself
 }
 
 int read_line(char reader[], FILE* f) {
     int index = 0;
-    //printf("hi");
     char store[1];
     size_t status = fread(store, 1, 1, f);
-    //printf("hey");
     while (*store != '\0' && *store != '\n' && status != 0) {
         reader[index] = *store;
         index++;
-        //printf("%c\n", *store);
-
         status =  fread(store, 1, 1, f);
     }
 
