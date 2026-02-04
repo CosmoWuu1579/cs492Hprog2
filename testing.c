@@ -106,6 +106,8 @@ void printing2(array_list* arr) {
         }
         printf("\n");
     }
+    result[size] = '\0';
+    printf("hello\n");
     if (strcmp(result, "1 1 0 | 0 ") != 0) {
         checker++;
     }
@@ -137,7 +139,6 @@ void printing1(array_list* arr) {
             index2++;
         }
     }
-
     if (index1 != arr->total_input) {
         printf("Your input is wrong\n");
         return;
@@ -147,15 +148,31 @@ void printing1(array_list* arr) {
         printf("Your output is wrong\n");
         return;
     }
-    char* result = (char*) malloc(8);
+    char* result = (char*) malloc(16);
     int size = 0;
     for (int i = 0; i < arr->total_input;i++) {
         printf("%d ", inputs[i]);
+        result[size] = inputs[i] + 48;
+        size++;
+        result[size] = ' ';
+        size++;
     }
     printf("| ");
+    result[size] = '|';
+    size++;
+    result[size]  = ' ';
+    size++;
     for (int i = 0; i < arr->total_output; i++) {
         printf("%d ", outputs[i]);
     }
+    result[size] = '\0';
+    int checker = 0;
+    if (strcmp(result, "0 1 | ") != 0) {
+        checker++;
+    }
+    printf("\n%s\n", result);
+    free(result);
+    size =0;
     printf("\n");
     long num = (long) pow(2, arr->total_input);
     for (long i = 0; i < num; i++) {
@@ -168,15 +185,47 @@ void printing1(array_list* arr) {
         }
 
         evaluate_input(arr, inputs, outputs);
+        if (i == 1) {
+            result = (char*) malloc(32);
+            size =0;
+        }
         for (int j = 0; j < arr->total_input; j++) {
             printf("%d ", inputs[j]);
+            if (i == 1) {
+                result[size] = inputs[j] + 48;
+                size++;
+                result[size] = ' ';
+                size++;
+            }
         }
         printf("| ");
+        if (i == 1) {
+        result[size] = '|';
+        size++;
+        result[size] = ' ';
+        size++;
+        }
         for (int j = 0; j < arr->total_output; j++) {
             printf("%d ", outputs[j]);
+            if (i == 1) {
+                result[size] = outputs[j] + 48;
+                size++;
+                result[size] = ' ';
+                size++;
+            }
         }
         printf("\n");
     }
+    result[size] = '\0';
+    if (strcmp(result, "1 0 | 1 ") != 0) {
+        checker++;
+    }
+    if (checker != 0) {
+        printf("\n FAILED TEST 1\n");
+    } else {
+        printf("\n PASSED TEST 1\n");
+    }
+    free(result);
     free(inputs);
     free(outputs);
 
@@ -199,7 +248,6 @@ void printing3(array_list* arr) {
             index2++;
         }
     }
-
     if (index1 != arr->total_input) {
         printf("Your input is wrong\n");
         return;
@@ -213,11 +261,30 @@ void printing3(array_list* arr) {
     int size = 0;
     for (int i = 0; i < arr->total_input;i++) {
         printf("%d ", inputs[i]);
+        result[size] = inputs[i] + 48;
+        size++;
+        result[size] = ' '; 
+        size++;
     }
     printf("| ");
+    result[size] = '|';
+    size++;
+    result[size] = ' ';
+    size++;
     for (int i = 0; i < arr->total_output; i++) {
         printf("%d ", outputs[i]);
+        result[size] = outputs[i] + 48;
+        size++;
+        result[size] = ' '; 
+        size++;
     }
+    int checker = 0;
+    result[size] = '\0';
+    if (strcmp("4 5 | 0 8 9 ", result) != 0) {
+        checker++;
+    }
+    free(result);
+    size = 0;
     printf("\n");
     long num = (long) pow(2, arr->total_input);
     for (long i = 0; i < num; i++) {
@@ -228,17 +295,48 @@ void printing3(array_list* arr) {
                 inputs[j] = 0;
             }
         }
-
+        if (i == 2) {
+            result = (char*) malloc(16);
+        }
         evaluate_input(arr, inputs, outputs);
         for (int j = 0; j < arr->total_input; j++) {
+            if (i == 2) {
+                result[size] = inputs[j] + 48;
+                size++;
+                result[size] = ' ';
+                size++;    
+            }
             printf("%d ", inputs[j]);
         }
         printf("| ");
+        if (i == 2) {
+            result[size] = '|';
+            size++;
+            result[size] = ' ';
+            size++;
+        }
         for (int j = 0; j < arr->total_output; j++) {
             printf("%d ", outputs[j]);
+            if (i == 2) {
+                result[size] = outputs[j] + 48;
+                size++;
+                result[size] = ' ';
+                size++;    
+            }
         }
         printf("\n");
     }
+    result[size] = '\0';
+    if (strcmp(result,"0 1 | 0 0 0 ") != 0) {
+        checker++;
+    }
+
+    if (checker != 0) {
+        printf("\n FAILED TEST 3\n");
+    } else {
+        printf("\n PASSED TEST 3 \n");
+    }
+    free(result);
     free(inputs);
     free(outputs);
 

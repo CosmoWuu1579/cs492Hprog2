@@ -1,2 +1,2 @@
 #!/usr/bin/sh
-gcc dynamic.c testing.c parse.c -o testing -lm
+gcc -g dynamic.c testing.c parse.c -o testing -lm
