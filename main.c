@@ -78,12 +78,12 @@ void printing(array_list* arr) {
         }
 
         evaluate_input(arr, inputs, outputs);
-        for (int i = 0; i < arr->total_input; i++) {
-            printf("%d ", inputs[i]);
+        for (int j = 0; j < arr->total_input; j++) {
+            printf("%d ", inputs[j]);
         }
         printf("| ");
-        for (int i = 0; i < arr->total_output; i++) {
-            printf("%d ", outputs[i]);
+        for (int j = 0; j < arr->total_output; j++) {
+            printf("%d ", outputs[j]);
         }
         printf("\n");
     }
